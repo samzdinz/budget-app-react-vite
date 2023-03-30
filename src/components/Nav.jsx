@@ -1,16 +1,39 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
-//logo home
+//rrd imports
+import { Form, NavLink } from 'react-router-dom';
+
+//library
+import { TrashIcon } from '@heroicons/react/24/solid';
+
+//assets
 import logohome from '../assets/logomark.svg';
 
-export default function Nav() {
+const Nav = ({ userName }) => {
     return (
         <nav>
-            <NavLink>
+            <NavLink to='/' aria-label='go to home'>
                 <img src={logohome} alt='' height={30} />
                 <span>UangKeyzie</span>
             </NavLink>
+            {userName && (
+                <Form
+                    method='post'
+                    action='/logout'
+                    onSubmit={(event) => {
+                        if (!confirm('Delete User and all data?')) {
+                            event.preventDefault();
+                        }
+                    }}
+                >
+                    <button type='submit' className='btn btn--warning'>
+                        <span>Delete User</span>
+                        <TrashIcon width={20} />
+                    </button>
+                </Form>
+            )}
         </nav>
     );
-}
+};
+
+export default Nav;
